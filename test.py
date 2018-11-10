@@ -3,7 +3,7 @@
 import curses
 from random import randrange, choice # generate and place new tile
 from collections import defaultdict
-
+#%%
 letter_codes = [ord(ch) for ch in 'WASDRQwasdrq']
 actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit']
 actions_dict = dict(zip(letter_codes, actions * 2))
@@ -19,7 +19,7 @@ def transpose(field):
 
 def invert(field):
     return [row[::-1] for row in field]
-
+#%%
 class GameField(object):
     def __init__(self, height=4, width=4, win=2048):
         self.height = height
@@ -154,7 +154,7 @@ class GameField(object):
             return check[direction](self.field)
         else:
             return False
-
+#%%
 def main(stdscr):
     def init():
         #重置游戏棋盘
