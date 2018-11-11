@@ -62,16 +62,21 @@ class GameField(object):
                 return new_row
             return tighten(merge(tighten(row)))
 
+#        moves = {}
+#        moves['Left']  = lambda field:                              \
+#                [move_row_left(row) for row in field]
+#        moves['Right'] = lambda field:                              \
+#                invert(moves['Left'](invert(field)))
+#        moves['Up']    = lambda field:                              \
+#                transpose(moves['Left'](transpose(field)))
+#        moves['Down']  = lambda field:                              \
+#                transpose(moves['Right'](transpose(field)))
         moves = {}
-        moves['Left']  = lambda field:                              \
-                [move_row_left(row) for row in field]
-        moves['Right'] = lambda field:                              \
-                invert(moves['Left'](invert(field)))
-        moves['Up']    = lambda field:                              \
-                transpose(moves['Left'](transpose(field)))
-        moves['Down']  = lambda field:                              \
-                transpose(moves['Right'](transpose(field)))
-
+        moves['Left'] = lambda field: [move_row_left(row) for row in self.field]
+        moves['Right'] = lambda field: [move_row_left(row[::-1])[::-1] for row in self.field]
+        moves['Up'] = lambda field: transpose([move_row_left(row) for row in transpose(self.field)])
+        moves['Down'] = lambda field: transpose([move_row_left(row[::-1])[::-1] for row in transpose(self.field)])
+        
         if direction in moves:
             if self.move_is_possible(direction):
                 self.field = moves[direction](self.field)
@@ -135,7 +140,8 @@ class GameField(object):
                 if row[i] != 0 and row[i + 1] == row[i]: # Merge
                     return True
                 return False
-            return any(change(i) for i in range(len(row) - 1))
+#            return any(change(i) for i in range(len(row) - 1))
+            return any(change(i) for i in range(self.width-1))
 
         check = {}
         check['Left']  = lambda field:                              \
