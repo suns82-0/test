@@ -83,13 +83,21 @@ class GameField(object):
         return not any(self.move_is_posseble(move) for move in actions)
 
     def draw(self, screen):
-        
-
+        help_string1 = '(W)Up (S)Down (A)Left (D)Right'
+        help_string2 = '     (R)Restart (Q)Exit'
+        gameover_string = '           GAME OVER'
+        win_string = '          YOU WIN!'
+        def cast(string):
+            screen.addstr(string + '\n')
         def draw_hor_separator():
-            
+            line = '+------' * self.width + '+'
+            cast(line)
 
         def draw_row(row):
-            
+            cast(''.join('|{:^5d} '.format(num) if num > 0 else '|      ' for num in row) + '|')
+
+        screen.clear()
+
 
     def spawn(self):
         new_element = 4 if randrange(100) > 89 else 2

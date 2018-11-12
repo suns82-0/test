@@ -100,15 +100,18 @@ class GameField(object):
             screen.addstr(string + '\n')
 
         def draw_hor_separator():
-            line = '+' + ('+------' * self.width + '+')[1:]
-            separator = defaultdict(lambda: line)
-            if not hasattr(draw_hor_separator, "counter"):
-                draw_hor_separator.counter = 0
-            cast(separator[draw_hor_separator.counter])
-            draw_hor_separator.counter += 1
+            # line = '+' + ('+------' * self.width + '+')[1:]
+            line = '+------' * self.width + '+'
+
+            # separator = defaultdict(lambda: line)
+            # if not hasattr(draw_hor_separator, "counter"):
+            #     draw_hor_separator.counter = 0
+            # cast(separator[draw_hor_separator.counter])
+            # draw_hor_separator.counter += 1
+            cast(line)
 
         def draw_row(row):
-            cast(''.join('|{: ^5} '.format(num) if num > 0 else '|      ' for num in row) + '|')
+            cast(''.join('|{:^5d} '.format(num) if num > 0 else '|      ' for num in row) + '|')
 
         screen.clear()
         cast('SCORE: ' + str(self.score))
@@ -204,7 +207,7 @@ def main(stdscr):
     curses.use_default_colors()
 
     # 设置终结状态最大数值为 2048
-    game_field = GameField(win=2048)
+    game_field = GameField(win=32)
 
 
     state = 'Init'
